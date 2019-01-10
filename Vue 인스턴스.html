@@ -1,0 +1,50 @@
+<html>
+    <head>
+    <title>vue 인스턴스</title>
+    </head>
+    <body>
+        <div id="app">
+            <p>{{foo}}</p>
+            <!--obj.foo는 더이상 변하지 않는다-->
+            <button v-on:click="foo ='babo'">chang it</button>
+        </div>
+        <script src="js/vue.js"></script>
+        <script>
+        /*vue 인스턴스 만들기*/
+        var vm = new Vue({
+            //옵션
+        })
+
+        /*속성과 메소드*/
+        var data = { a : 1}
+
+        var vm1 = new Vue({
+            data:data
+        })
+        console.log(vm1.a === data.a); // true
+        vm1.a = 2
+        console.log(data.a);
+        data.a = 3
+        console.log(vm1.a);
+
+        var obj = {
+            foo : 'bar'
+        }
+        Object.freeze(obj) //를 사용한경우 기존 속성이 변경을 막아 반응성 시스템 추척할수없음.
+        new Vue ({
+            el:'#app',
+            data:obj
+        })
+
+        var vm2 = new Vue({
+            data:{
+                a:1
+            },
+            created:function (){
+                // 'this' 는 vm2 인스턴스를 가리킨다.
+                console.log('a is:' + this.a)
+            }
+        })
+        </script>
+    </body>
+</html>

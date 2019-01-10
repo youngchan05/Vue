@@ -1,0 +1,38 @@
+<html>
+    <head>
+    <title>선언적 렌더링</title>
+    </head>
+    <body>
+        <div id="app-3">
+            <p v-if="seen">이제나를 볼수 있어요</p>
+        </div>
+
+        <div id="app-4">
+            <ol>
+                <li v-for="todo in todos">
+                    {{todo.text}}
+                </li>
+            </ol>
+        </div>
+        <script src="js/vue.js"></script>
+        <script>
+            var app3 = new Vue({
+                el: '#app-3',
+                data: {
+                    seen :true
+                }
+            })
+
+            var app4 = new Vue({
+                el: '#app-4',
+                data: {
+                    todos:[
+                        {text:'java script 배우기'},
+                        {text:'Vue 배우기'},
+                        {text:'java 배우기'},
+                    ]
+                }
+            })
+        </script>
+    </body>
+</html>
