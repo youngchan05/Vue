@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <title>vue 인스턴스</title>
+</head>
+
+<body>
+    <div  id="hello"></div>
+    <div  id="hello2">
+        {{msg}}
+    </div>
+    <div  id="hello3">
+        {{msg}}
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            template :'<div>{{msg}}</div>',
+            data : {
+                msg:'hello chan'
+            }
+        })
+        // var hello_element = document.querySelector('#hello');
+        vm.$mount('#hello',false);
+        // vm.$mount 메ㅓ드는 vue 인스턴스를 DOM 의 특정 엘리먼트에 마운트 한다.
+        //created 이벤트 훅이실행되고 beforeMount 이벤트 훅시 실행되기 전에서 동작한다.
+
+        var vm2 = new Vue({
+            el:'#hello2',
+            data : {
+                msg : 'hello Vue.js'
+            },
+            created : function (){
+                console.log('created 이벤트 발생');
+                this.$nextTick (function(){
+                    this.$el.innerHTML = "hello vuex!"
+                })
+            }
+        })
+
+        var vm3 = new Vue({
+            //콜백함수 없이 vm.$nextTick 메서드 호출
+            el:'#hello3',
+            data : {
+                msg : 'hello Vue.js'
+            },
+            created : function (){
+                var th = this.$nextTick();
+                th.then(function(vue){
+                    console.log(vue);
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
