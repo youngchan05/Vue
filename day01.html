@@ -1,0 +1,103 @@
+<html>
+    <head>
+    <title>선언적 렌더링</title>
+    </head>
+    <body>
+        <div id="app5">
+            <p>
+                {{message}}
+            </p>
+            <button v-on:Click="reversemassage">메세지 뒤집기</button>
+        </div>
+        <div class="app6">
+            <p>
+                {{message}}
+            </p>
+            <input type="text" v-model="message">
+        </div>
+        <div id="app7">
+            <ol>
+                <todo-item
+                    v-for="item in groceryList"
+                    v-bind:todo="item"
+                    v-bind:key="item.id">
+                </todo-item>
+            </ol>
+        </div>
+        <div v-bind:class="classObject">111</div>
+        <script src="js/vue.js"></script>
+        <script>
+            var app5 = new Vue({
+                el:"#app5",
+                data: {
+                    message : "안녕하세요 ! vue.js !"
+                },
+                methods:{
+                    reversemassage:function(){
+                        this.message = this.message.split('').reverse().join('')
+                    }
+                }
+            })
+            var app6 = new Vue({
+                el:'.app6',
+                data:{
+                    message : '안녕하세요 vue!'
+                }
+            })
+
+            Vue.component('todo-item',{
+                props:['todo'],
+                template:'<li>{{todo.text}}</li>'
+            })
+
+            var app7 = new Vue({
+                el:"#app7",
+                data:{
+                    groceryList:[
+                        {id: 0, text:'text1'},
+                        {id: 1, text:'text2'},
+                        {id: 2, text:'text3'}
+                    ]
+                }
+            })
+
+            //데이터 객체
+            var data = { a: 1}
+            //Vue 인스턴스에 데이터 객체를 추가합니다.
+            var vm = new Vue({
+                data : data
+            })
+
+            //같은 객체를 참조합니다!
+            console.log(data.a === vm.a); //true
+
+            //속성 설정은 원본 데이터에도 영향을 미친다.
+            vm.a = 2
+            console.log(data.a);
+
+            new Vue({
+                data:{
+                    a:1
+                },
+                //updated , destroyed ,mounted
+                created : () => console.log("a is :" + this.a)
+
+            })
+
+            new Vue({
+                data: {
+  isActive: true,
+  error: null
+},
+computed: {
+  classObject: function () {
+    return {
+      active: this.isActive && !this.error,
+      'text-danger': this.error && this.error.type === 'fatal'
+    }
+  }
+}
+            })
+        </script>
+    </body>
+</html>

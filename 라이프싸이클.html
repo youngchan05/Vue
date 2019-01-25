@@ -1,0 +1,72 @@
+<html>
+    <head>
+    <title>vue 인스턴스</title>
+    </head>
+    <body>
+            <div id="hello">
+                <keep-alive>
+                    <component :is='child1' v-if='show'></component>
+                </keep-alive>
+            </div>
+        <script src="js/vue.js"></script>
+        <script>
+        var Child = {
+            template :'<div>Child activated 이벤트 훅 테스트</div>',
+            activated : function (){
+                console.log('Child activated 이벤트가 호줄되었습니다.')
+            }
+        }
+            var vm = new Vue({
+                el:'#hello',
+                data : {
+                    child1: Child,
+                    show:true,
+                    hello:'vue.js'
+                },
+                beforeCreate:function(){
+                    console.log('beforeCreate 이벤트가 발생했습니다.')
+                },
+                //beforeCreate 이벤트 훅을 추가하면 생성자에 아무 인자도 받지 않는 익명의 함수를 전달한다.
+                // 이 함수는 vm에 전달한 data 옵션 객체와 이벤트를 초기화하기 전에 실행하며 옵션의 라이프사이클을 추적하는 데도움을 줄수 있다.
+                created:function(){
+                    console.log('created 이벤트가 발생되었습니다.')
+                    //created 이벤트 훅의 추가는 beforeCreae 이벤트 훅을 추가할 때 처럼 아무 인자도 받지 않는 익명의 함수를전달.
+                    //created 이벤트가 호줄될 때는 vue vm 이 데이터 감시, 계산된 속성, 이벤트 콜백등 생성자에 전달한 옵션을 내부적으로 처리해둔 상태이며 this로 vue 객체 내부에 접근할수 있다
+                },
+                beforeMount:function(){
+                    console.log('beforeMount 이벤트가 발생되었습니다.')
+                    //beforeMount 이벤트 훅은 vue.js 프로그램에서 초기 렌더링 일어나기 직전, 템플릿 또는 렌더링 함수를 컴파일한 직후에 실행 됩니다, 그리고 vue,js 프로그램을 서버에서 실행 할때는 호출하지 않는다.
+                },
+                mounted:function(){
+                    this.hello = 'hello vue';
+                    console.log('mount 이벤트가 발생되었습니다.')
+                    //mounted 이벤트 훅을 실행 할때는 이미 vue cm 에 vm.$el 속성이 생성돼어 있으므로 dom 을 직접 수정할수 있다.
+                    //따라서 mounted 이벤트 훅은 vue.js 와 통합하기 어려운 다른 라이브러리의 호출 결과를 dom 반영하거나 vue.js 가 자동으로 하지 못하는 작업을 살행하는데 중점을 둡니다.
+                    //*참고로 mounted 이벤트 훅은 beforeMount 이벤트 훅과 마찬가지로 서버 사이드 렌더링에선 호출되지 않는다
+                    // 또한 DOM(vm$.el 속성)에 표시할 데이터를 미리 가져오는 코드도 있지만 DOM 에 표시할 데이터를 미리 가져오는 일은 created 이벤트 훅을 사용하는것이 더낫다.
+                },
+                beforeDestroy:function(){
+                    console.log('beforeDestroy 이벤트가 발생되었습니다.')
+                    // beforedestroy 이벤트가 호줄퇴는 시점에서는 vue 인스턴스에 추가된 이벤트나 DOM 제거 되지않은 상태다
+                    //따라서 개발자가 임의 추가한 이벤트와 감시, 리액티브 구독해제 DOM을 제거하는 등의 정리 작업을 이 이벤트후에서 실행할 수 있습니다.
+                },
+                destroyed : function(){
+                    console.log('destroyed 이벤트가 발생되었습니다.')
+                },
+                beforeUpdate: function(){
+                    console.log('새롭게 업데이트 하는 hello 상태 값은' + this.hello +'입니다.')
+                    //beforeupdate 이벤트 훅이 호출되는 시점 vue.js는 두가지 작업을 해둔상태여야 한다
+                    // 1 사용자가 입력한 '상태'값으로 data 옵션에 제공한 속성의 값이 변경될경우
+                    // 2 브라우저 dom 에서 '상태' 값을 반영할 '가상 DOM'을 메모리에서 가져옴
+                    // beforeupdate 훅은 가상 DOM 에 다른 엘리먼트의 값을 변경하거나 css 스타일을 교체하는 동의 작업을 할 수 있다
+                },
+                updated : function(){
+                    console.log('새롭게 업데이트 하는 hello 상태 값은' + this.hello +'입니다.')
+                    console.log(this.$el.innerHTML)
+                    //updated 이벤트 훅의 호출 시점은 DOM에 변경된 '상태'가 명확히 정용되었음을 보장해야한다
+                    //만약 DOM에 직접 접근해서 '상태'를 수정하면 updated 이벤트 훅은 DOM을 다시 업데이트 하지 않는다.
+                }
+            })
+        </script>
+    </body>
+</html>
