@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <title>vue 인스턴스</title>
+</head>
+
+<body>
+    <div id="hello">
+        {{message}}
+    </div>
+    <div id="txt1">
+        <span v-text="msg"></span>
+    </div>
+    <div id="app3">
+        <div v-bind:id="dynamicId">아이디값 바인딩</div>
+    </div>
+    <div id="app4">
+        <button v-bind:disabled="isDisabled">버튼 비활성화</button>
+    </div>
+    <div id="app5">
+        <input type="checkbox" v-bind:checked="isChecked">
+    </div>
+    <div id="app6">
+        <a v-bind:href="moveHref">링크 이동</a>
+    </div>
+    <div id="app7">
+        <a v-once>다시는 변경되지 않습니다.{{msg}}</a>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el : '#hello',
+            data:{
+                message : "hello.vue!!"
+            }
+        })
+        // 문자열 보간법
+        var app2 = new Vue({
+            el : '#txt1',
+            data : {
+                msg : 'hello <b> Vue.js</b>'
+            }
+        })
+        //속성 보간법
+        var app3 = new Vue({
+            el:'#app3',
+            data:{
+                dynamicId : "firstDiv"
+            }
+        })
+        //버튼 비활성화 지정
+        var app4 = new Vue({
+            el:'#app4',
+            data : {
+                isDisabled : true
+            }
+        })
+
+        //체크박스 체크 활성화
+        var app5 = new Vue({
+            el : '#app5',
+            data : {
+                isChecked :true
+            }
+        })
+        // 링크 바인딩
+        var app6 = new Vue({
+            el : '#app6',
+            data : {
+                moveHref : 'https://www.naver.com'
+            }
+        })
+        // 일회성 보간법
+        var app7 = new Vue({
+            el : '#app7',
+            data : {
+                msg : "hello"
+            }
+        })
+    </script>
+</body>
+
+</html>

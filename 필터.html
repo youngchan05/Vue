@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>vue 인스턴스</title>
+</head>
+
+<body>
+    <div id="app">
+        <span>{{i | multiply_num }}</span>
+    </div>
+    <div id="app1">
+        <span>{{"hello" | capitalize}}</span>
+    </div>
+    <div id="app2">
+        <span>{{k | arguments_num(3,j) | add_number}}</span>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        //전역 필터
+        Vue.filter('multiply_num', function(value) {
+            return value * 5
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                i: 5
+            },
+        })
+        var app1 = new Vue({
+            el: '#app1',
+            filters: {
+                capitalize: function(test) {
+                    console.log(test)
+                    return test[0].toUpperCase() + test.slice(1)
+                }
+            }
+        })
+        var aap2 = new Vue({
+            el : '#app2',
+            data : {
+                k : 3,
+                j : 2,
+            },
+            filters:{
+                arguments_num:function(value , number , j){
+                    if(j < 0){
+                        return (value * (number + j))
+                    }else{
+                        return value * j;
+                    }
+
+                },
+                //여러개 필터 적용하면 템플렛에서 사용한 머스태시 가장 왼쪽에 있는 필터부터 적용하고 적용된 결과를 두번째 필터에 전달한다.
+                add_number:function(value){
+                    return value + 4;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
