@@ -1,0 +1,193 @@
+<html>
+
+<head>
+    <title>반복 렌더링</title>
+</head>
+
+<body>
+    <div id="app1">
+        <ul>
+            <li v-for="n in list">{{n}}</li>
+        </ul>
+    </div>
+    <div id="app2">
+        <ul>
+            <li v-for="item in items">{{ item.message}}</li>
+        </ul>
+    </div>
+    <div id="app3">
+        <ul>
+            <li v-for="value in object">{{value}}</li>
+        </ul>
+    </div>
+    <div id="app4">
+        <ul>
+            <li v-for="(value,key) in object">{{key}}:{{value}}</li>
+        </ul>
+    </div>
+    <div id="app5">
+        <span v-for="n in 20">{{n}}</span>
+    </div>
+    <div id="app6">
+        <dl>
+            <div v-for="item in items">
+                <dt>{{item.id}}</dt>
+                <dd>{{item.msg}}</dd>
+            </div>
+        </dl>
+    </div>
+    <div id="app7">
+        <dl>
+            <template v-for="item in items">
+                <dt>{{item.id}}</dt>
+                <dd>{{item.msg}}</dd>
+            </template>
+        </dl>
+    </div>
+    <div id="app8">
+        <ul>
+            <li v-for="(n ,index) in items">{{index}}: {{n}}</li>
+        </ul>
+    </div>
+    <div id="app9">
+        <ul>
+            <li v-for="(key,value ,index) in items">{{index}}:{{key}}.{{value}}</li>
+        </ul>
+    </div>
+    <div id="app10">
+        <ul>
+            <li v-for="item in items">{{item.title}}</li>
+        </ul>
+    </div>
+    <div id="app11">
+        <ul>
+            <li v-for="item in items" :key="item.id">{{item.title}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //자바스크립트배열을 받아 번호 없는 리스트 출력
+        var app1 = new Vue({
+            el: '#app1',
+            data: {
+                list: ['list1', 'list2', 'list3']
+            }
+        })
+        //갹체를 포함하는 배열을 반복해서 출력
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                items: [{
+                        message: 'message1'
+                    },
+                    {
+                        message: 'message2'
+                    },
+                    {
+                        message: 'message3'
+                    }
+                ]
+            }
+        })
+        //디렉티브로 객체 순회
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                object: {
+                    firstName: 'youngchan',
+                    lastName: 'kim',
+                    age: 28
+
+                }
+            }
+        })
+        //객체를 이용해 순회할 때 속성 이름과 속성값을 함께 전달
+        var app4 = new Vue({
+            el: '#app4',
+            data: {
+                object: {
+                    firstName: 'youngchan',
+                    lastName: 'kim',
+                    age: 28
+
+                }
+            }
+        })
+        //임의 숫자를 설정해 순회
+        var app5 = new Vue({
+            el: '#app5',
+        })
+        //반복 출력하려는 태그가 1개 이상일때 div 태그로 감싸기
+        var app6 = new Vue({
+            el: '#app6',
+            data: {
+                items: [{
+                    id: 1,
+                    msg: 'hello'
+                }, {
+                    id: 2,
+                    msg: 'vue.js'
+                }]
+            }
+        })
+        //반복해서 사용하려는 태그들을 template 태그로 감싼 형태
+        var app7 = new Vue({
+            el: '#app7',
+            data: {
+                items: [{
+                    id: 1,
+                    msg: 'hello'
+                }, {
+                    id: 2,
+                    msg: 'vue.js'
+                }]
+            }
+        })
+        //배열을 이용해 순회할 때 순서를 함께 전달
+        var app8 = new Vue({
+            el: '#app8',
+            data: {
+                items: ['list1', 'list2', 'list3']
+            }
+        })
+        //객체를 이용해 순회할 때 순서를 함께 전달
+        var app9 = new Vue({
+            el: '#app9',
+            data: {
+                items: {
+                    firstName: "youngchan",
+                    lastName: "kim",
+                    age: 28
+                }
+            }
+        })
+        //KEY 속성을 사용하지 않은 v-for 디렉티브
+        var app10 = new Vue({
+            el: '#app10',
+            data: {
+                items: [{
+                    id: 1,
+                    title: "hello"
+                }, {
+                    id: 2,
+                    title: "vue"
+                }]
+            }
+        })
+        //KEY 속성을 추가한 v-fot 디렉티브
+        var app11 = new Vue({
+            el:"#app11",
+            data :{
+                items:[{
+                    id:1,
+                    title:'hello'
+                },{
+                    id:2,
+                    title:'vue'
+                }]
+            }
+        })
+    </script>
+</body>
+
+</html>
