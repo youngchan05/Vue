@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>조건부 렌더링</title>
+</head>
+
+<body>
+    <div id="app1">
+        <span v-if="id == 1">값이 1입니다.</span>
+    </div>
+    <div id="app2">
+        <span v-if="id == 1">값이 1입니다.</span>
+        <span v-else-if="id == 2">값이 2입니다.</span>
+    </div>
+    <div id="app3">
+        <span v-if = "id == 1">값이 1입니다.</span>
+        <span v-else-if = "id == 2">값이 2입니다.</span>
+        <span v-else> 값이 2가 아닙니다.</span>
+    </div>
+    <div id="app4">
+        <template v-if="id == 1">
+            <span >값은1입니다.</span>
+        </template>
+        <template  v-else-if="id == 2">
+            <span>값은2입니다.</span>
+        </template>
+        <template v-else>
+            <span>값은 1 , 2가 아닙니다.</span>
+        </template>
+    </div>
+    <div id="app5">
+        <span v-show="useLocation"></span>
+    </div>
+    <div id="app6">
+        <ul>
+            <li v-for="item in items" v-if="item.location == 'KR'">{{item.name}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var app1 = new Vue({
+            el:'#app1',
+            data :{
+                id:1
+            }
+        })
+        var app2 = new Vue({
+            el:"#app2",
+            data:{
+                id :2
+            }
+        })
+        var app3 = new Vue({
+            el:'#app3',
+            data :{
+                id:4
+            }
+        })
+        var app4 = new Vue({
+            el:'#app4',
+            data:{
+                id:4
+            }
+        })
+        var app5 = new Vue({
+            el:'#app5',
+            data:{
+                useLocation:false
+            }
+        })
+        var app6 = new Vue({
+            el:"#app6",
+            data:{
+                items:[{
+                    name :"jason",
+                    location:"KR"
+                },{
+                    name:"youngmi",
+                    location:"KR"
+                },{
+                    name:"sunjea",
+                    lacation:"USA"
+                }]
+            }
+        })
+    </script>
+</body>
+
+</html>

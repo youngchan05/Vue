@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <title>조건부 렌더링</title>
+</head>
+
+<body>
+    <div id="example">
+        <p>원본메세지:{{message}}</p>
+        <p>뒤집히도록 계산된 메세지: {{reversedMessage}}</p>
+    </div>
+    <div id="example1">
+        <p>캐싱된시간: {{now}}</p>
+        <p ref="tester"></p>
+    </div>
+    <div id="example2">
+        <p>역순 문자열: {{msg_reverse}}</p>
+        <p ref="tester"></p>
+    </div>
+    <div id="example3">
+        <p>{{fullName}}</p>
+    </div>
+    <div id="example4">
+        <span>{{a}}</span>
+    </div>
+    <div id="example5">
+        <span>{{a}}</span>
+    </div>
+    <div id="example6">
+        <span>{{a}}</span>
+    </div>
+    <div id="example7">
+        <span>{{b}}</span>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var example = new Vue({
+            el: "#example",
+            data: {
+                message: "안녕하세요"
+            },
+            computed: {
+                reversedMessage: function() {
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+        var example1 = new Vue({
+            el: '#example1',
+            computed: {
+                now: function() {
+                    return Date.now();
+                }
+            },
+            methods: {
+                show: function() {
+                    // this.$refs.tester.innerHTML = Date.now();//캐싱을 사용하지 않은 예
+                    this.$refs.tester.innerHTML = this.now; //캐싱을 사용하는 예
+                }
+            }
+        })
+        var example2 = new Vue({
+            el: '#example2',
+            data: {
+                msg: "뷰 공부중"
+            },
+            computed: {
+                msg_reverse: function() {
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+            methods: {
+                show: function() {
+                    // this.$refs.tester.innerHTML = this.msg_reverse;
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        })
+        var example3 = new Vue({
+            el: "#example3",
+            data: {
+                firstName: "youngchan",
+                lastName: "chan"
+            },
+            computed: {
+                fullName: {
+                    get: function() {
+                        return this.firstName + '  ' + this.lastName
+                    },
+                    set: function(newValue) {
+                        var names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[names.length - 1]
+                    }
+                }
+            }
+        })
+        var example4 = new Vue({
+            el: '#example4',
+            data: {
+                a: 1
+            },
+            watch: {
+                a: function(val, oldVval) {
+                    console.log('new: %s ,old : %s', val, oldVval)
+                }
+            }
+        })
+        var example5 = new Vue({
+            el: "#example5",
+            data: {
+                a: 1
+            },
+            watch: {
+                a: 'someMethod'
+            },
+            methods: {
+                someMethod: function(new_, old) {
+                    console.log(new_)
+                    console.log(old)
+                }
+            }
+        })
+        //객체 내부 변화까지 감시
+        var example6 = new Vue({
+            el: '#example6',
+            data: {
+                a: {
+                    msg: "new Message",
+                    since: 2017
+                }
+            },
+            wacth : {
+                a : {
+                    handler : function(val, oldVal){
+                        console.log(val);
+                        console.log(oldVal);
+                    },
+                    deep :true
+                }
+            }
+        })
+        //즉각감시사용자
+        var example7 = new Vue({
+            el:'#example7',
+            data: {
+                b : 4
+            },
+            watch :{
+                b:{
+                    handler : function(val , oldVal){
+                       console.log(val)
+                       console.log(oldVal)
+                   },
+                   immediate :true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
