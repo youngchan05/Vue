@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>ratings</title>
+</head>
+<style>
+    .icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url(images/icon_star.png) no-repeat center;
+        background-size: 20px;
+        opacity: .2;
+        text-indent: -9999px;
+        overflow: hidden;
+    }
+
+    .icon.checked {
+        opacity: 1;
+    }
+</style>
+
+<body>
+    <div class="ratings">
+        <a href="#" class="icon"></a>
+        <a href="#" class="icon"></a>
+        <a href="#" class="icon"></a>
+        <a href="#" class="icon"></a>
+        <a href="#" class="icon"></a>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var target = document.getElementsByClassName('icon');
+        for (var i = 0; i < target.length; i++) {
+            (function(index) {
+                target[i].addEventListener('click', function() {
+                    set(target[index]);
+
+                    for (var j = index; j >= 0; j--) {
+                        target.item(j).classList.add('checked');
+                    }
+                })
+            })(i);
+        }
+
+        function set($elem) {
+            $elem.classList.remove('checked')
+        }
+    </script>
+</body>
+
+</html>
