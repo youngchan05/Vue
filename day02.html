@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <title>전역 API</title>
+</head>
+
+<body>
+    <h1>전역 API</h1>
+    <h3>Vue.extend(option)</h3>
+    <div id="monut-point"></div>
+    <h1>사용자 지정 디렉티브</h1>
+    <input v-focus>
+    <script src="js/vue.js"></script>
+    <script>
+        var profile = Vue.extend({
+            template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+            data: function() {
+                return {
+                    firstName: 'kim',
+                    lastName: 'chacn',
+                    alias: 'young'
+                }
+            }
+        })
+        new profile().$mount('#monut-point')
+
+        var myMixin = {
+            crated: function() {
+                this.hello();
+            },
+            methods: {
+                hello: function() {
+                    console.log('hello form mixin!')
+                }
+            }
+        }
+        var Component = Vue.extend({
+            mixins: [myMixin]
+        })
+        var component = new Component() // =>    hello form mixin!
+
+        //옵션 병합
+        var mixin = {
+            created: function() {
+                console.log('mixin hook called')
+            }
+        }
+        new Vue({
+            mixins: [mixin],
+            created: function() {
+                console.log('component hook called');
+            }
+        })
+        var mixin = {
+            methods: {
+                foo: function() {
+                    console.log('foo')
+                },
+                conflicting: function() {
+                    console.log('form mixin')
+                }
+            }
+        }
+        var vm = new Vue({
+            mixins: [mixin],
+            methods: {
+                bar: function() {
+                    console.log('bar')
+                },
+                conflicting: function() {
+                    console.log('from self')
+                }
+            }
+        })
+        vm.foo()
+        vm.bar()
+        vm.conflicting()
+
+        // 전역 사용자 정의 디렉티브 v-focus 등록
+        Vue.directive('focus', {
+            // 바인딩 된 엘리먼트가 DOM에 삽입되었을 때...
+            inserted: function(el) {
+                // 엘리먼트에 포커스를 줍니다
+                el.focus()
+            }
+        })
+        directives: {
+  focus: {
+    // 디렉티브 정의
+    inserted: function () {
+      el.focus()
+    }
+  }
+}
+
+    </script>
+</body>
+
+</html>

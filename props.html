@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>todoList</title>
+</head>
+<style>
+
+</style>
+<body>
+    <div id="example">
+  <!-- A : 간단한 속성은 문자열을 전달할 수 있다 -->
+  <child-component val="message"></child-component>
+  <!-- B : 바인딩 유형의 특성은 데이터이나 수식을 전달할 수 있다 -->
+  <child-component :val="message"></child-component>
+</div>
+
+<div id="example1">
+    <child-component1></child-component1>
+</div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('child-component',{
+            template: '<p>{{val}}</p>',
+            props:['val']
+        })
+        new Vue({
+            el:"#example",
+            data :{
+                message :'hello'
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -16,15 +16,15 @@
             var $selector = document.querySelectorAll('.icon');
             for(var i = 0; i < $selector.length; i++){
                 (function(index){
-                    $selector[i].addEventListener('click',function(){
-                        set();
+                    $selector[index].addEventListener('click',function(){
+                        reset();
                         for(var j = 0; j <= index; j++){
                             $selector.item(j).classList.add('checkd');
                         }
                     })
                 })(i)
             }
-            function set(){
+            function reset(){
                 for(var i = 0; i < $selector.length; i++){
                     $selector.item(i).classList.remove('checkd');
                 }
